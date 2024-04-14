@@ -20,7 +20,7 @@ def gemini_res(input,prompt):
     return res.text
 st.set_page_config(page_title="Divya GPT",page_icon="div.png")
 st.image("divya.png")
-inp=st.text_area(label="Enter the Prompt")
+inp=st.text_area(label="Enter the topic to generate")
 response=gemini_res(input=prompts(),prompt=inp)
 gen_per=st.button(label="Generate")
 if gen_per==True:
