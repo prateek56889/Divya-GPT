@@ -63,4 +63,4 @@ if gen_per==True:
            flowchart_file.seek(0)
            st.sidebar.download_button("Download Flowcharts",flowchart_file.getvalue(),file_name="Flowchat.jpg",mime="image/png")
      
-st.write("NOte:-Divya Gpt can make mistakes, retry the prompt is issue engagges")
+st.write("NOte:-Divya Gpt can make mistakes, retry the prompt if issues engagges")
