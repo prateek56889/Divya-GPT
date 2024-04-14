@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as model
 from fpdf import FPDF
-model.configure(api_key="AIzaSyBJNXS4cWKUEgcYda0g0BB-kQ7wpDQiwFY")
+model.configure(api_key=st.secrets["GEN_API"])
 def prompts():
      return """
      Hi buddy i am giving you some names you have to filter them out and generate accordingly
