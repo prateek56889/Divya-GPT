@@ -14,16 +14,24 @@ def prompts():
      5. glossary or hard words 
      6. questions and answers upto 5 
      """
-def flow_char(title,over):
-    graph = Digraph()
-    # Nodes ko add karein
-    graph.node(name=title,style="filled",color="cyan")
-    for j in over.split(","):
-        graph.node(name=j[:80],style="filled",color="green")
-    for j in over.split(","):
-        graph.edge(title,j[:80])
-    # Graph ko visualize karein aur save karein
-    return graph
+def flow_chart(title, over):
+    # Create a new figure
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    # Draw nodes
+    ax.text(0.5, 0.9, title, ha='center', va='center', fontsize=12, bbox=dict(facecolor='cyan', alpha=0.5))
+    for j_idx, j in enumerate(over.split(",")):
+        ax.text(0.5, 0.7 - j_idx * 0.1, j[:80], ha='center', va='center', fontsize=12, bbox=dict(facecolor='green', alpha=0.5))
+
+    # Draw edges
+    for j_idx, j in enumerate(over.split(",")):
+        ax.annotate("", xy=(0.5, 0.8 - j_idx * 0.1), xytext=(0.5, 0.75 - j_idx * 0.1),
+                    arrowprops=dict(arrowstyle="->"))
+
+    # Remove axes
+    ax.axis('off')
+
+    return fig
 def gemini_res(input,prompt):
     """
     this has to be get in return through gemini
