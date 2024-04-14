@@ -1,6 +1,5 @@
 import streamlit as st
 import google.generativeai as model
-from fpdf import FPDF
 model.configure(api_key=st.secrets["GEN_API"])
 def prompts():
      return """
