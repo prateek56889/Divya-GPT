@@ -58,9 +58,9 @@ if gen_per==True:
      with open("flow.jpg","wb") as flo:
            st.write(flow)
            flowchar=flow_char(title=inp,over=flow)
-           flowchart_bytes = BytesIO()
-           flowchart_bytes.write(flowchar.pipe(format='png'))
-           flowchart_bytes.seek(0)
-           st.sidebar.download_button("Download Flowcharts",flowchart_bytes.getvalue(),file_name="Flowchat.jpg",mime="image/png")
+           flowchart_file = BytesIO()
+           flowchar.savefig(flowchart_file, format='png')
+           flowchart_file.seek(0)
+           st.sidebar.download_button("Download Flowcharts",flowchart_file.getvalue(),file_name="Flowchat.jpg",mime="image/png")
      
 st.write("NOte:-Divya Gpt can make mistakes, retry the prompt is issue engagges")
