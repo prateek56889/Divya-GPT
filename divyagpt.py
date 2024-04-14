@@ -30,7 +30,7 @@ if gen_per==True:
      st.sidebar.subheader("DivyaGPT offers Download the chat option")
      with open("summary.txt","w") as data:
                data.write(response)
-               st.sidebar.download_button("Download Chats",response,file_name="summarise.txt")
+               st.sidebar.download_button("Download Summary",response,file_name="summarise.txt")
      st.sidebar.title("Get's hard to understand Text?")
      st.sidebar.subheader("Dont'worry Divya gpt too provides Ascii based flowcharts , Wanna check?")
      flow=gemini_res(input="""can you create an ascii based flowchart for the following data make
