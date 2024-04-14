@@ -34,7 +34,7 @@ if gen_per==True:
      st.sidebar.title("Get's hard to understand Text?")
      st.sidebar.subheader("Dont'worry Divya gpt too provides Ascii based flowcharts , Wanna check?")
      flow=gemini_res(input="""can you create an ascii based flowchart for the following data make
-                     sure that flowchart is comprehensive and simple""",prompt=response)
+                     sure that flowchart is comprehensive and attractive""",prompt=inp)
      with open("flow.txt","w") as flo:
            flo.write(flow)
            st.write(flow)
