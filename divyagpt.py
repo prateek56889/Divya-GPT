@@ -40,4 +40,4 @@ if gen_per==True:
            st.write(flow)
            st.sidebar.download_button("Download Flowcharts",flow,file_name="Flowchat.txt")
      
-st.write("Divya GPT sometimes create Biased data if any thing persists make sure to regenerate the data")
+st.write("Note:-Divya GPT sometimes create Biased data if any thing persists make sure to regenerate the data")
