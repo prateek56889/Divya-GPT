@@ -14,7 +14,7 @@ def prompts():
      5. glossary or hard words 
      6. questions and answers upto 5 
      """
-def flow_chart(title, over):
+def flow_char(title, over):
     # Create a new figure
     fig, ax = plt.subplots(figsize=(8, 6))
 
