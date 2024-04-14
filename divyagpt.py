@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as model
 from io import BytesIO
+from graphviz import Digraph
 model.configure(api_key=st.secrets["GEN_API"])
 
 def prompts():
