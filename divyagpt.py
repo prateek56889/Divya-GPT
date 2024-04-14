@@ -1,7 +1,6 @@
 import streamlit as st
 import google.generativeai as model
 from io import BytesIO
-from graphviz import Digraph
 from matplotlib import pyplot as plt
 model.configure(api_key=st.secrets["GEN_API"])
 
