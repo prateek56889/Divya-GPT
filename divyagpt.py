@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as model
 from io import BytesIO
 import subprocess
+from latex import build_pdf
 import os
 from matplotlib import pyplot as plt
 import matplotlib
@@ -29,29 +30,7 @@ def gemini_res(input, prompt):
     res = gemini.generate_content([input, prompt])
     return res.text
 
-def compile_latex(latex_code):
-    tex_file = "temp.tex"
-    pdf_file = "temp.pdf"
-    with open(tex_file, "w") as f:
-        f.write(latex_code)
-    
-    try:
-        subprocess.run(["pdflatex", tex_file], check=True)
-        with open(pdf_file, "rb") as f:
-            pdf_data = f.read()
-    except subprocess.CalledProcessError as e:
-        st.error(f"An error occurred while compiling LaTeX: {e}")
-        pdf_data = None
-    finally:
-        os.remove(tex_file)
-        if os.path.exists(pdf_file):
-            os.remove(pdf_file)
-        if os.path.exists("temp.aux"):
-            os.remove("temp.aux")
-        if os.path.exists("temp.log"):
-            os.remove("temp.log")
-    
-    return pdf_data
+
 
 st.set_page_config(page_title="Divya GPT", page_icon="div.png")
 st.image("divya.png")
@@ -73,7 +52,7 @@ if gen_per:
     flow = gemini_res(input="""provide me a report of the following topic including heading, abstract, introduction, description,
     flowcharts, and conclusion in the form of LaTeX""", prompt=inp)
     
-    pdf_data = compile_latex(flow)
+    pdf_data = build_pdf(flow)
     if pdf_data:
         st.sidebar.download_button("Download Flowchart PDF", pdf_data, file_name="Flowchart.pdf", mime="application/pdf")
     
