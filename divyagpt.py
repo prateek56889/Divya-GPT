@@ -1,65 +1,80 @@
 import streamlit as st
 import google.generativeai as model
 from io import BytesIO
+import subprocess
+import os
 from matplotlib import pyplot as plt
+import matplotlib
+
 model.configure(api_key=st.secrets["GEN_API"])
 
 def prompts():
-     return """
-     Hi buddy i am giving you some names you have to filter them out and generate accordingly
-     1.title of the given prompt(use your intellect for it)
-     2. overview of that topic
-     3. summary of that topic
-     4. important keywords of that topic
-     5. glossary or hard words 
-     6. questions and answers upto 5 
-     """
-def flow_char(title, over):
-    # Create a new figure
-    fig, ax = plt.subplots(figsize=(8, 6))
-
-    # Draw nodes
-    ax.text(0.5, 0.9, title, ha='center', va='center', fontsize=12, bbox=dict(facecolor='cyan', alpha=0.5))
-    for j_idx, j in enumerate(over.split(",")):
-        ax.text(0.5, 0.7 - j_idx * 0.1, j[:80], ha='center', va='center', fontsize=12, bbox=dict(facecolor='green', alpha=0.5))
-
-    # Draw edges
-    for j_idx, j in enumerate(over.split(",")):
-        ax.annotate("", xy=(0.5, 0.8 - j_idx * 0.1), xytext=(0.5, 0.75 - j_idx * 0.1),
-                    arrowprops=dict(arrowstyle="->"))
-
-    # Remove axes
-    ax.axis('off')
-
-    return fig
-def gemini_res(input,prompt):
+    return """
+    Hi buddy I am giving you some names you have to filter them out and generate accordingly
+    1. Title of the given prompt (use your intellect for it)
+    2. Overview of that topic
+    3. Summary of that topic
+    4. Important keywords of that topic
+    5. Glossary or hard words
+    6. Questions and answers up to 5
     """
-    this has to be get in return through gemini
+
+
+
+def gemini_res(input, prompt):
     """
-    gemini=model.GenerativeModel("gemini-pro")
-    res=gemini.generate_content([input,prompt])
+    This has to get in return through Gemini
+    """
+    gemini = model.GenerativeModel("gemini-pro")
+    res = gemini.generate_content([input, prompt])
     return res.text
-st.set_page_config(page_title="Divya GPT",page_icon="div.png")
+
+def compile_latex(latex_code):
+    tex_file = "temp.tex"
+    pdf_file = "temp.pdf"
+    with open(tex_file, "w") as f:
+        f.write(latex_code)
+    
+    try:
+        subprocess.run(["pdflatex", tex_file], check=True)
+        with open(pdf_file, "rb") as f:
+            pdf_data = f.read()
+    except subprocess.CalledProcessError as e:
+        st.error(f"An error occurred while compiling LaTeX: {e}")
+        pdf_data = None
+    finally:
+        os.remove(tex_file)
+        if os.path.exists(pdf_file):
+            os.remove(pdf_file)
+        if os.path.exists("temp.aux"):
+            os.remove("temp.aux")
+        if os.path.exists("temp.log"):
+            os.remove("temp.log")
+    
+    return pdf_data
+
+st.set_page_config(page_title="Divya GPT", page_icon="div.png")
 st.image("divya.png")
-inp=st.text_area(label="Enter the Topic to generate")
-response=gemini_res(input=prompts(),prompt=inp)
-gen_per=st.button(label="Generate")
-if gen_per==True:
-     st.write(response)
-     st.sidebar.image("favicon.svg")
-     st.sidebar.title("Wanna download your important Topics ?")
-     st.sidebar.subheader("DivyaGPT offers Download the chat option")
-     st.sidebar.download_button("Download Chats",response,file_name="summarise.txt")
-     st.sidebar.title("Get's hard to understand Text?")
-     st.sidebar.subheader("Dont'worry Divya gpt too provides Ascii based flowcharts , Wanna check?")
-     flow=gemini_res(input="""According to the input make sure to mention some key points around 5 key points,
-                     each point should be seperated by comma ',' dont mention numbers only a paragraph seperated by comma""",prompt=inp)
-     with open("flow.jpg","wb") as flo:
-           st.write(flow)
-           flowchar=flow_char(title=inp,over=flow)
-           flowchart_file = BytesIO()
-           flowchar.savefig(flowchart_file, format='png')
-           flowchart_file.seek(0)
-           st.sidebar.download_button("Download Flowcharts",flowchart_file.getvalue(),file_name="Flowchat.jpg",mime="image/png")
-     
-st.write("NOte:-Divya Gpt can make mistakes, retry the prompt if issues engagges")
+
+inp = st.text_area(label="Enter the Topic to generate")
+response = gemini_res(input=prompts(), prompt=inp)
+
+gen_per = st.button(label="Generate")
+if gen_per:
+    st.write(response)
+    
+    st.sidebar.image("favicon.svg")
+    st.sidebar.title("Wanna download your important Topics?")
+    st.sidebar.subheader("DivyaGPT offers Download the chat option")
+    st.sidebar.download_button("Download Chats", response, file_name="summarise.txt")
+    
+    st.sidebar.title("Get's hard to understand Text?")
+    st.sidebar.subheader("Don't worry Divya GPT too provides ASCII-based flowcharts. Wanna check?")
+    flow = gemini_res(input="""provide me a report of the following topic including heading, abstract, introduction, description,
+    flowcharts, and conclusion in the form of LaTeX""", prompt=inp)
+    
+    pdf_data = compile_latex(flow)
+    if pdf_data:
+        st.sidebar.download_button("Download Flowchart PDF", pdf_data, file_name="Flowchart.pdf", mime="application/pdf")
+    
+st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
