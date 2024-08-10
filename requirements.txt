@@ -1,3 +1,4 @@
 streamlit
 matplotlib
 google-generativeai
+latex
