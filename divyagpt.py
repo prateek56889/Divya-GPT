@@ -50,6 +50,6 @@ if gen_per:
     
     
     st.subheader("Rendered LaTeX Output")
-    st.code(flow)
+    st.write(flow)
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
