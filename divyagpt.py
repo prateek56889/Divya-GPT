@@ -51,5 +51,6 @@ if gen_per:
     
     st.subheader("Rendered LaTeX Output")
     st.write(flow)
+    st.sidebar.download_button("PDF report",flow, file_name="divya_gpt.tex")
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
