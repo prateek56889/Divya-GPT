@@ -46,7 +46,7 @@ if gen_per:
     st.sidebar.title("Get's hard to understand Text?")
     st.sidebar.subheader("Don't worry Divya GPT too provides ASCII-based flowcharts. Wanna check?")
     flow = gemini_res(input="""provide me latex code of the following topic which follows this format heading, abstract, introduction, description,
-    flowcharts, and conclusion in the form of LaTeX Note:- make sure to create flowchats in latex and emmbed them into this report""", prompt=inp)
+    flowcharts, and conclusion in the form of LaTeX Note:- make sure to create flowchats in latex code and emmbed them into this report""", prompt=inp)
     
     
     st.subheader("Rendered LaTeX Output")
