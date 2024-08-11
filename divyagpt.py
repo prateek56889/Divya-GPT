@@ -54,6 +54,6 @@ if gen_per:
     
     pdf_data = build_pdf(flow)
     if pdf_data:
-        st.sidebar.download_button("Download Flowchart PDF", pdf_data, file_name="Flowchart.pdf", mime="application/pdf")
+        st.write(pdf_data)
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
