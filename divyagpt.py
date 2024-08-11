@@ -1,9 +1,5 @@
 import streamlit as st
 import google.generativeai as model
-from io import BytesIO
-import subprocess
-from latex import build_pdf
-import os
 from matplotlib import pyplot as plt
 import matplotlib
 
