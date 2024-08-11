@@ -49,6 +49,7 @@ if gen_per:
     flowcharts, and conclusion in the form of LaTeX""", prompt=inp)
     
     
-    st.write(flow)
+    st.subheader("Rendered LaTeX Output")
+    st.latex(r'\begin{equation}' + flow + r'\end{equation}')
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
