@@ -48,8 +48,7 @@ if gen_per:
     flow = gemini_res(input="""provide me a report of the following topic including heading, abstract, introduction, description,
     flowcharts, and conclusion in the form of LaTeX""", prompt=inp)
     
-    pdf_data = build_pdf(flow)
-    if pdf_data:
-        st.write(pdf_data)
+    
+    st.write(pdf_data)
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
