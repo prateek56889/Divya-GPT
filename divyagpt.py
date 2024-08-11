@@ -49,6 +49,6 @@ if gen_per:
     flowcharts, and conclusion in the form of LaTeX""", prompt=inp)
     
     
-    st.write(pdf_data)
+    st.write(flow)
     
 st.write("Note: Divya GPT can make mistakes. Retry the prompt if issues arise.")
